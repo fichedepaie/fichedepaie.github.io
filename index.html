@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- ============================================================ -->
@@ -2667,10 +2668,9 @@
                                 <span id="user-name-display" onclick="app.editUserName()" 
                                     style="cursor: pointer; border-bottom: 1px dashed rgba(255,255,255,0.6); padding-bottom: 1px;"
                                     title="Cliquez pour modifier">Saadia</span>
-                                <span onclick="app.editUserName()" style="cursor:pointer; font-size:0.7em; opacity:0.8; margin-left:5px;">✏️</span>
                             </h2>
                             <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 0.9em;" id="header-subtitle-home">
-                                📊 Fiche de paie • <span id="current-month-display">Février 2026</span>
+                                📊 <span id="app-title-display" style="cursor:pointer; border-bottom: 1px dashed rgba(255,255,255,0.5);" onclick="app.editAppTitle()" title="Cliquez pour modifier">Fiche de paie</span> • <span id="current-month-display">Février 2026</span>
                             </p>
                         </div>
                         <button onclick="app.toggleHomeMenu()" style="background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.5em; width: 40px; height: 40px; border-radius: 8px; cursor: pointer; padding: 0;">☰</button>
@@ -2699,6 +2699,26 @@
                                 Annuler
                             </button>
                             <button onclick="app.saveUserName()" 
+                                style="flex:1; padding:12px; background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; font-weight:600;">
+                                ✅ Enregistrer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal modifica titolo app -->
+                <div id="edit-apptitle-modal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
+                    <div style="background:white; border-radius:16px; padding:30px; margin:20px; max-width:350px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+                        <h3 style="margin:0 0 20px 0; color:#2d3748;">✏️ Modifier le titre</h3>
+                        <input type="text" id="edit-apptitle-input" placeholder="ex: Fiche de paie..." 
+                            style="width:100%; padding:14px; border:2px solid #e2e8f0; border-radius:10px; font-size:16px; box-sizing:border-box; outline:none;"
+                            onkeydown="if(event.key==='Enter') app.saveAppTitle()">
+                        <div style="display:flex; gap:10px; margin-top:20px;">
+                            <button onclick="app.closeEditAppTitle()" 
+                                style="flex:1; padding:12px; border:2px solid #e2e8f0; background:white; border-radius:10px; cursor:pointer; font-size:15px; color:#666;">
+                                Annuler
+                            </button>
+                            <button onclick="app.saveAppTitle()" 
                                 style="flex:1; padding:12px; background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none; border-radius:10px; cursor:pointer; font-size:15px; font-weight:600;">
                                 ✅ Enregistrer
                             </button>
@@ -3057,15 +3077,21 @@
 
             <!-- ONGLET RÉCAPITULATIF -->
             <div id="tab-recap" class="tab-content">
-                <div class="recap-header">
-                    <h3>📈 Récapitulatif par période</h3>
-                    
+
+                <!-- Sezione collassabile unica -->
+                <div class="input-card" style="margin-bottom: 8px;">
+                    <div class="collapsible-section-header" onclick="app.toggleDashboardSection('recap-periode')">
+                        <h3>📈 Récapitulatif par période</h3>
+                        <div class="collapsible-arrow" id="arrow-recap-periode">▼</div>
+                    </div>
+                    <div class="collapsible-section-content" id="content-recap-periode">
+
+                <div class="recap-header" style="background:transparent; padding:0; box-shadow:none; border:none; margin-bottom:16px;">
                     <!-- Selector mese période paie -->
                     <select id="periode-mois" onchange="app.updatePeriodeDates()" 
                         style="width:100%; padding:10px 12px; border:1.5px solid #c7d2fe; border-radius:12px; font-size:0.95em; background:white; cursor:pointer; margin-bottom:10px; box-shadow:0 3px 0 #c7d2fe;">
                         <option value="">-- Sélectionner un mois --</option>
                     </select>
-
                     <!-- Du / Au + Filtrer -->
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
                         <div>
@@ -3079,15 +3105,6 @@
                     </div>
                     <button onclick="app.filterByDate()" style="width:100%; height:42px; background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none; border-radius:12px; font-weight:700; font-size:0.95em; cursor:pointer; box-shadow:0 4px 0 #4a5bc4;">Filtrer</button>
                 </div>
-
-                <!-- Vue d'ensemble -->
-                <div class="input-card" style="margin-bottom: 20px;">
-                    <div class="collapsible-section-header" onclick="app.toggleDashboardSection('vue-ensemble')">
-                        <h3>📊 Récapitulatif annuel</h3>
-                        <div class="collapsible-arrow" id="arrow-vue-ensemble">▼</div>
-                    </div>
-                    
-                    <div class="collapsible-section-content" id="content-vue-ensemble">
                 <!-- PRINCIPAUX -->
                 <div class="stats-hero">
                     <div class="stat-card full-width">
@@ -3145,12 +3162,14 @@
                 <!-- hidden pour compatibilité JS -->
                 <span id="recap-cp-restants" style="display:none">0</span>
                 <span id="recap-cp-acquis" style="display:none">0</span>
-                </div><!-- Fine collapsible content vue-ensemble -->
-                </div><!-- Fine input-card vue-ensemble -->
+                </div><!-- Fine collapsible content recap-periode -->
+
+                    </div><!-- Fine collapsible content recap-periode -->
+                </div><!-- Fine input-card recap-periode -->
 
                 <!-- Vue Calendario Mensile -->
             
-                    <div id="calendar-view-section" class="calendar-view-container" style="margin-bottom: 30px;">
+                    <div id="calendar-view-section" class="calendar-view-container" style="margin-bottom: 30px; margin-top: 8px;">
     <h3 style="margin-bottom: 15px;">📅 Vue calendrier</h3>
     
     <!-- PANNELLO MODIFICA INLINE -->
@@ -3240,11 +3259,8 @@
                         <div class="collapsible-arrow" id="arrow-param-apparence">▼</div>
                     </div>
                     <div class="collapsible-section-content" id="content-param-apparence">
-                        <div class="input-group" style="margin-bottom:16px;">
-                            <label for="app-name-input">📝 Nom de l'application</label>
-                            <input type="text" id="app-name-input" placeholder="ex: Mes Heures de Travail">
-                            <button onclick="app.saveAppName()" class="btn-secondary" style="margin-top:8px;">💾 Sauvegarder le nom</button>
-                        </div>
+                        <!-- input nascosto per compatibilità JS -->
+                        <input type="hidden" id="app-name-input">
 
                         <div class="setting-item">
                             <div class="setting-info">
@@ -4187,12 +4203,15 @@
             updateGreeting() {
                 const firstname = localStorage.getItem(LS_PREFIX + 'user_firstname') || '';
                 const appName = localStorage.getItem(LS_PREFIX + 'app_name') || 'Mon Appli Fiche de Paie';
+                const appTitle = localStorage.getItem(LS_PREFIX + 'app_title') || 'Fiche de paie';
                 const titleEl = document.getElementById('app-title');
                 const greetingEl = document.getElementById('header-greeting');
+                const appTitleEl = document.getElementById('app-title-display');
                 if (titleEl) titleEl.textContent = appName;
                 if (greetingEl && firstname) greetingEl.textContent = `Bonjour ${firstname} 👋`;
-                // Mettre à jour le titre de la page et le champ paramètres
-                document.title = appName;
+                if (appTitleEl) appTitleEl.textContent = appTitle;
+                // Mettre à jour le titre de la page
+                document.title = appTitle;
                 const appNameInput = document.getElementById('app-name-input');
                 if (appNameInput) appNameInput.value = appName;
             },
@@ -5852,8 +5871,8 @@
             filterByDate() {
                 this.updateRecapStats();
                 // Apri automaticamente il Récapitulatif annuel
-                const content = document.getElementById('content-vue-ensemble');
-                const arrow = document.getElementById('arrow-vue-ensemble');
+                const content = document.getElementById('content-recap-periode');
+                const arrow = document.getElementById('arrow-recap-periode');
                 if (content && !content.classList.contains('open')) {
                     content.classList.add('open');
                     if (arrow) arrow.classList.add('open');
@@ -5881,14 +5900,14 @@
                 this.updateAllCounters();
 
                 // Apri automaticamente Récapitulatif annuel e scrolla
-                const contentEl = document.getElementById('content-vue-ensemble');
-                const arrow = document.getElementById('arrow-vue-ensemble');
+                const contentEl = document.getElementById('content-recap-periode');
+                const arrow = document.getElementById('arrow-recap-periode');
                 if (contentEl && !contentEl.classList.contains('open')) {
                     contentEl.classList.add('open');
                     if (arrow) arrow.classList.add('open');
                 }
                 setTimeout(() => {
-                    const header = document.querySelector('[onclick*="vue-ensemble"]');
+                    const header = document.querySelector('[onclick*="recap-periode"]');
                     if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }, 150);
             },
@@ -8316,6 +8335,30 @@ ${pages.join('\n')}
             closeEditName() {
                 const modal = document.getElementById('edit-name-modal');
                 modal.style.display = 'none';
+            },
+
+            editAppTitle() {
+                const modal = document.getElementById('edit-apptitle-modal');
+                const input = document.getElementById('edit-apptitle-input');
+                const current = document.getElementById('app-title-display').textContent;
+                input.value = current;
+                modal.style.display = 'flex';
+                setTimeout(() => input.focus(), 100);
+            },
+
+            saveAppTitle() {
+                const input = document.getElementById('edit-apptitle-input');
+                const newTitle = input.value.trim();
+                if (!newTitle) { input.style.borderColor = '#ef4444'; return; }
+                localStorage.setItem(LS_PREFIX + 'app_title', newTitle);
+                document.getElementById('app-title-display').textContent = newTitle;
+                document.title = newTitle;
+                this.closeEditAppTitle();
+                this.showToast('✅ Titre mis à jour !', 'success');
+            },
+
+            closeEditAppTitle() {
+                document.getElementById('edit-apptitle-modal').style.display = 'none';
             },
 
             updateHomeDate() {
