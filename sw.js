@@ -1,4 +1,4 @@
-const CACHE = 'paie-v3';
+const CACHE = 'paie-v4';
 const FILES = [
   './',
   './index.html',
