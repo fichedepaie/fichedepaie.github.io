@@ -3,6 +3,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "io.github.fichedepaie.twa",
-    "sha256_cert_fingerprints": ["13:40:5E:04:19:48:0A:4A:0E:87:8F:CA:7C:D6:B4:06:C5:B7:62:61:5B:8D:E0:5E:D2:5E:92:08:03:3F:F4:5D"]
+    "sha256_cert_fingerprints": ["19:43:90:BD:D3:14:AB:83:C7:99:02:E4:4A:97:73:C1:45:AF:CE:66:AE:74:04:9E:F9:1F:FC:9A:01:6E:E3:0C"]
   }
 }]
