@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <!-- ============================================================ -->
@@ -3242,10 +3243,9 @@
                     </div>
                     
                     <div id="calendar-grid" style="background: white; border-radius: 16px; padding: 15px; border:1.5px solid #e0e7ff; box-shadow:0 6px 0 #c7d2fe, 0 10px 24px rgba(102,126,234,0.15);"></div>
-                </div>
+                </div><!-- fine calendar-view-section -->
+            </div><!-- fine tab-recap -->
 
-
-            </div>
 
             <!-- ONGLET PARAMÈTRES -->
             <div id="tab-parametres" class="tab-content">
@@ -3510,7 +3510,11 @@
             <!-- ONGLET PLANNING -->
             <div id="tab-planning" class="tab-content">
                 <div class="input-card" style="margin-bottom:20px;">
-                    <h3>📅 Planning mensuel de paie</h3>
+                    <div class="collapsible-section-header" onclick="app.toggleDashboardSection('planning-mensuel')">
+                        <h3>📅 Planning mensuel de paie</h3>
+                        <div class="collapsible-arrow" id="arrow-planning-mensuel">▼</div>
+                    </div>
+                    <div class="collapsible-section-content" id="content-planning-mensuel">
                     <p style="color:#666;font-size:0.88em;margin-bottom:16px;">Choisissez le type de période à afficher</p>
                     
                     <!-- Toggle Buttons: Mois civil / Entreprise -->
@@ -3625,8 +3629,8 @@
                             </div>
                         </div>
                     </div>
-
-                </div>
+                    </div><!-- fine content-planning-mensuel -->
+                </div><!-- fine input-card planning -->
 
                 <!-- Historique détaillé (collassato di default) -->
                 <!-- NOTES -->
