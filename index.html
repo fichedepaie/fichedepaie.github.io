@@ -8562,7 +8562,7 @@ ${pages.join('\n')}
                 return localStorage.getItem(LS_PREFIX + 'gemini_key') || '';
             },
 
-            toggleVoiceInput() {
+            async toggleVoiceInput() {
                 // Check internet
                 if (!navigator.onLine) {
                     this.showVoiceError('❌ Pas de connexion internet. Vérifiez votre réseau et réessayez.');
@@ -8584,9 +8584,17 @@ ${pages.join('\n')}
                     return;
                 }
 
+                // Richiedi permesso microfono esplicitamente
+                try {
+                    await navigator.mediaDevices.getUserMedia({ audio: true });
+                } catch(permErr) {
+                    this.showVoiceError('🚫 Microphone refusé. Autorisez le micro dans Paramètres → Apps → Paie → Autorisations → Microphone.');
+                    return;
+                }
+
                 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 const recognition = new SpeechRecognition();
-                recognition.lang = navigator.language || 'fr-FR'; // langue du téléphone
+                recognition.lang = 'fr-FR';
                 recognition.interimResults = false;
                 recognition.maxAlternatives = 1;
                 this._voiceRecognition = recognition;
