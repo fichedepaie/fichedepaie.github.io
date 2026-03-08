@@ -3071,9 +3071,14 @@
                 </div>
 
                 <!-- Liste des dernières saisies -->
-                <div class="recent-entries">
-                    <h3>📋 Dernières saisies</h3>
-                    <div id="recent-entries-list"></div>
+                <div class="input-card" style="margin-bottom:20px;">
+                    <div class="collapsible-section-header" onclick="app.toggleDashboardSection('dernieres-saisies')">
+                        <h3>📋 Dernières saisies</h3>
+                        <div class="collapsible-arrow" id="arrow-dernieres-saisies">▼</div>
+                    </div>
+                    <div class="collapsible-section-content" id="content-dernieres-saisies">
+                        <div id="recent-entries-list"></div>
+                    </div>
                 </div>
             </div>
 
@@ -3168,9 +3173,13 @@
                 </div><!-- Fine input-card recap-periode -->
 
                 <!-- Vue Calendario Mensile -->
-            
-                    <div id="calendar-view-section" class="calendar-view-container" style="margin-bottom: 30px; margin-top: 20px;">
-    <h3 style="margin-bottom: 15px;">📅 Vue calendrier</h3>
+                <div class="input-card" style="margin-bottom:20px; margin-top:20px;">
+                    <div class="collapsible-section-header" onclick="app.toggleDashboardSection('recap-calendrier')">
+                        <h3>📅 Vue calendrier</h3>
+                        <div class="collapsible-arrow" id="arrow-recap-calendrier">▶</div>
+                    </div>
+                    <div class="collapsible-section-content" id="content-recap-calendrier">
+                    <div id="calendar-view-section" class="calendar-view-container" style="margin-bottom: 10px; margin-top: 10px;">
     
     <!-- PANNELLO MODIFICA INLINE -->
     <div id="calendar-inline-editor" style="display:none; background:linear-gradient(145deg,#ffffff,#eef1fb); border:1.5px solid #c7d2fe; border-radius:16px; padding:20px; margin-bottom:16px; box-shadow:0 6px 0 #c7d2fe, 0 10px 28px rgba(102,126,234,0.2);">
@@ -3244,6 +3253,8 @@
                     
                     <div id="calendar-grid" style="background: white; border-radius: 16px; padding: 15px; border:1.5px solid #e0e7ff; box-shadow:0 6px 0 #c7d2fe, 0 10px 24px rgba(102,126,234,0.15);"></div>
                 </div><!-- fine calendar-view-section -->
+                    </div><!-- fine collapsible recap-calendrier -->
+                </div><!-- fine input-card recap-calendrier -->
             </div><!-- fine tab-recap -->
 
 
@@ -3511,7 +3522,7 @@
             <div id="tab-planning" class="tab-content">
                 <div class="input-card" style="margin-bottom:20px;">
                     <div class="collapsible-section-header" onclick="app.toggleDashboardSection('planning-mensuel')">
-                        <h3>📅 Planning mensuel de paie</h3>
+                        <h3>📅 Planning mensuel</h3>
                         <div class="collapsible-arrow" id="arrow-planning-mensuel">▼</div>
                     </div>
                     <div class="collapsible-section-content" id="content-planning-mensuel">
@@ -3637,13 +3648,13 @@
                 <div class="input-card" style="margin-bottom:20px;">
                     <div class="collapsible-section-header" onclick="app.toggleDashboardSection('notes')">
                         <h3>📝 Notes & Rappels</h3>
-                        <div class="collapsible-arrow" id="arrow-notes">▶</div>
+                        <div class="collapsible-arrow" id="arrow-notes">▼</div>
                     </div>
                     <div class="collapsible-section-content" id="content-notes">
                         <!-- FORM NUOVA NOTA -->
                         <div style="margin-bottom:16px;">
                             <div style="display:flex; gap:6px; margin-bottom:10px; flex-wrap:nowrap;">
-                                <button class="note-cat-btn active" data-cat="general" onclick="app.selectNoteCategory(this)" style="flex:1; padding:5px 4px; border-radius:20px; border:2px solid #667eea; background:#eef2ff; color:#667eea; font-size:10px; font-weight:700; cursor:pointer; white-space:nowrap;">📋 Général</button>
+                                <button class="note-cat-btn active" data-cat="general" data-active="true" onclick="app.selectNoteCategory(this)" style="flex:1; padding:5px 4px; border-radius:20px; border:2px solid #667eea; background:#eef2ff; color:#667eea; font-size:10px; font-weight:700; cursor:pointer; white-space:nowrap;">📋 Général</button>
                                 <button class="note-cat-btn" data-cat="attention" onclick="app.selectNoteCategory(this)" style="flex:1; padding:5px 4px; border-radius:20px; border:2px solid #e2e8f0; background:white; color:#94a3b8; font-size:10px; font-weight:700; cursor:pointer; white-space:nowrap;">⚠️ Attention</button>
                                 <button class="note-cat-btn" data-cat="urgent" onclick="app.selectNoteCategory(this)" style="flex:1; padding:5px 4px; border-radius:20px; border:2px solid #e2e8f0; background:white; color:#94a3b8; font-size:10px; font-weight:700; cursor:pointer; white-space:nowrap;">🔴 Urgent</button>
                                 <button class="note-cat-btn" data-cat="resolu" onclick="app.selectNoteCategory(this)" style="flex:1; padding:5px 4px; border-radius:20px; border:2px solid #e2e8f0; background:white; color:#94a3b8; font-size:10px; font-weight:700; cursor:pointer; white-space:nowrap;">✅ Résolu</button>
@@ -3659,7 +3670,7 @@
                 <div class="input-card" style="margin-bottom:20px;">
                     <div class="collapsible-section-header" onclick="app.toggleDashboardSection('historique')">
                         <h3>📋 Historique détaillé</h3>
-                        <div class="collapsible-arrow" id="arrow-historique">▶</div>
+                        <div class="collapsible-arrow" id="arrow-historique">▼</div>
                     </div>
                     <div class="collapsible-section-content" id="content-historique">
                         <div style="padding:4px 0;">
@@ -5480,6 +5491,13 @@
             },
             // Afficher les dernières saisies
             displayRecentEntries() {
+                // Auto-apri la sezione se ci sono dati
+                const contentEl = document.getElementById('content-dernieres-saisies');
+                const arrow = document.getElementById('arrow-dernieres-saisies');
+                if (contentEl && !contentEl.classList.contains('open')) {
+                    contentEl.classList.add('open');
+                    if (arrow) arrow.classList.add('open');
+                }
                 const container = document.getElementById('recent-entries-list');
                 const recent = this.workData.slice(0, 3);
                 
@@ -5570,17 +5588,19 @@
                     b.style.borderColor = '#e2e8f0';
                     b.style.background = 'white';
                     b.style.color = '#94a3b8';
+                    b.removeAttribute('data-active');
                 });
                 btn.style.borderColor = '#667eea';
                 btn.style.background = '#eef2ff';
                 btn.style.color = '#667eea';
+                btn.setAttribute('data-active', 'true');
             },
 
             saveNote() {
                 const text = document.getElementById('note-text-input').value.trim();
                 if (!text) { this.showToast('⚠️ Écrivez une note avant enregistrer', 'warning'); return; }
 
-                const activeCat = document.querySelector('.note-cat-btn[style*="#667eea"]');
+                const activeCat = document.querySelector('.note-cat-btn[data-active="true"]');
                 const cat = activeCat ? activeCat.dataset.cat : 'general';
 
                 let notes = JSON.parse(localStorage.getItem(LS_PREFIX + 'notes') || '[]');
@@ -8280,25 +8300,23 @@ ${pages.join('\n')}
                 const menu = document.getElementById('home-menu');
                 if (menu) menu.style.display = 'none';
                 
-                // 2. Vai alla pagina Récapitulatif
+                // 2. Vai al tab Récapitulatif
                 this.switchMainTab('recap');
-                
-                // 3. Vai al tab Récapitulatif
                 this.switchTab('recap');
                 
-                // 4. Scrolla fino al calendario con animazione fluida
+                // 3. Apri la sezione collassabile Vue calendrier e scrolla
                 setTimeout(() => {
-                    const calendarSection = document.getElementById('calendar-view-section');
-                    if (calendarSection) {
-                        calendarSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        
-                        // Highlight temporaneo per indicare dove siamo arrivati
-                        calendarSection.style.transition = 'box-shadow 0.3s';
-                        calendarSection.style.boxShadow = '0 0 0 3px #667eea';
-                        setTimeout(() => {
-                            calendarSection.style.boxShadow = '';
-                        }, 1500);
+                    const contentEl = document.getElementById('content-recap-calendrier');
+                    const arrow = document.getElementById('arrow-recap-calendrier');
+                    if (contentEl && !contentEl.classList.contains('open')) {
+                        contentEl.classList.add('open');
+                        if (arrow) { arrow.textContent = '\u25bc'; arrow.classList.add('open'); }
+                        this.renderCalendar();
                     }
+                    setTimeout(() => {
+                        const card = contentEl ? contentEl.closest('.input-card') : document.getElementById('calendar-view-section');
+                        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 200);
                 }, 300);
             },
 
